@@ -1,4 +1,4 @@
-package br.com.inatel.stockquotemanager.acceptance;
+package br.com.inatel.stockquotemanager.cucumber;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-Feature: Quote validation
+Feature: Quote Controller validation
   
   Background:
 		Given The list of stocks from the external api stock manager
@@ -19,7 +19,6 @@ Feature: Quote validation
     
 	Scenario Outline: Add Quotes to a Valid Stock
 				AC 2 - Add Quotes to a Valid Stock.
-					AC 2.1 - Add one or more quotes.
 					AC 2.1 - With valid HTTP status code return.					
 				AC 3 - Refuse to add Invalid Stock Quote
 					AC 3.1 - With Invalid Stock Id

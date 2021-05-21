@@ -1,4 +1,4 @@
-package br.com.inatel.stockquotemanager.acceptance.steps;
+package br.com.inatel.stockquotemanager.cucumber.steps;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -51,9 +51,10 @@ public class QuoteSteps {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@When("I try to list the quotes of stock {string}")
 	public void i_try_to_list_the_quotes_of_stock(String string) {
-		stockQuotesDto = quoteController.listQuotesOfAStock(string);
+		stockQuotesDto = (ResponseEntity<StockQuotesDto>) quoteController.listQuotesOfAStock(string);
 	}
 	
 	@Then("The HTTP status code should be {int}")
@@ -69,9 +70,10 @@ public class QuoteSteps {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@When("I try to add the quotes")
 	public void i_try_to_add_the_quotes() {
-		stockQuotesDto = quoteController.addStockQuote(form);
+		stockQuotesDto = (ResponseEntity<StockQuotesDto>) quoteController.addStockQuote(form);
 	}
 	
 	private List<Quote> generateQuotes(String stockId, int numOfQuotes) {

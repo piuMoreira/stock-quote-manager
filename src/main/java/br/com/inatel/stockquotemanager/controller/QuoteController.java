@@ -35,7 +35,7 @@ public class QuoteController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<StockQuotesDto>> listAllQuotes() {
+	public ResponseEntity<?> listAllQuotes() {
 		List<StockDto> stocks = stockService.getAllStocks();
 		
 		if(!stocks.isEmpty()) {	
@@ -44,16 +44,16 @@ public class QuoteController {
 		}
 		
 		log.warn("There's no stocks on the database.");
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.status(404).body("There's no stocks on the database.");
 	}
 	
 	@GetMapping("/{stockId}")
-	public ResponseEntity<StockQuotesDto> listQuotesOfAStock(@PathVariable String stockId) {
+	public ResponseEntity<?> listQuotesOfAStock(@PathVariable String stockId) {
 		StockDto stockDto = stockService.getStock(stockId);
 		
 		if(stockDto == null) {
 			log.debug("Unable to find a stock {}", stockId);
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(404).body("Unable to find stock "+stockId);
 		}
 		
 		List<Quote> quotes = quoteRepository.findByStockId(stockId);
@@ -64,24 +64,24 @@ public class QuoteController {
 		}
 		
 		log.warn("There's no quotes in the stock {}.",stockId);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.status(404).body("There's no quotes in the stock "+stockId);
 		
 	}
 	
 	@PostMapping
-	public ResponseEntity<StockQuotesDto> addStockQuote(@RequestBody StockQuoteForm form) {
+	public ResponseEntity<?> addStockQuote(@RequestBody StockQuoteForm form) {
 		StockDto stockDto = stockService.getStock(form.getId());
 		
 		if(stockDto == null) {
 			log.debug("Unable to find a stock {}", form.getId());
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(404).body("Unable to find stock"+form.getId());
 		}
 		
 		List<Quote> quotes = form.toListQuote();
 		quoteRepository.saveAll(quotes);
 		
 		log.debug("{} quotes were added to stock {}", quotes.size(), form.getId());
-		return ResponseEntity.status(201).body(new StockQuotesDto(form.getId(), quotes));
+		return ResponseEntity.created(null).body(new StockQuotesDto(form.getId(), quotes));
 	}
 	
 }

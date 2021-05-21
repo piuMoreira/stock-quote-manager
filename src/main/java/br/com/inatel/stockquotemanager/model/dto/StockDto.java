@@ -8,6 +8,10 @@ public class StockDto {
 		this.id = id;
 	}
 	
+	public StockDto() {
+		
+	}
+	
 	public String getId() {
 		return id;
 	}
